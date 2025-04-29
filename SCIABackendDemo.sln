@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCIABackendDemo", "SCIABackendDemo.csproj", "{C4376E65-5841-204B-FE6E-608FAEA9097A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4376E65-5841-204B-FE6E-608FAEA9097A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4376E65-5841-204B-FE6E-608FAEA9097A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4376E65-5841-204B-FE6E-608FAEA9097A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4376E65-5841-204B-FE6E-608FAEA9097A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9DBFFAA9-C0E2-4454-B9C6-EF3BEAD92126}
+	EndGlobalSection
+EndGlobal
