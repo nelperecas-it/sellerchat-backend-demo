@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using SCIABackendDemo.Configuration;
 using Serilog;
+using SCIABackendDemo.Models; // Asegúrate de usar el espacio de nombres correcto
 
 
 namespace SCIABackendDemo.Services
@@ -106,5 +107,57 @@ namespace SCIABackendDemo.Services
             // Devolvemos ambos valores como tupla
             return (callId, joinUrl);
         }
+        public async Task<CallDetails> GetCallDetailsAsync(string callId)
+        {
+            // URL para obtener detalles de la llamada específica
+            var url = $"https://api.ultravox.ai/api/calls/{callId}";
+
+            // Configurar encabezados de autenticación
+            _httpClient.DefaultRequestHeaders.Remove("X-API-Key");
+            _httpClient.DefaultRequestHeaders.Add("X-API-Key", _apiKey);
+
+            // Definir el número máximo de reintentos y el tiempo de espera entre reintentos
+            int maxRetries = 5;
+            int retries = 0;
+            TimeSpan retryDelay = TimeSpan.FromSeconds(3);
+
+            while (retries < maxRetries)
+            {
+                // Hacer la solicitud GET para obtener los detalles de la llamada
+                var response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                // Leer el cuerpo de la respuesta
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Parsear la respuesta JSON
+                var callData = JsonSerializer.Deserialize<JsonElement>(jsonResponse);
+
+                // Verificar si los datos necesarios están presentes
+                if (callData.TryGetProperty("summary", out var summaryProperty) && 
+                    callData.TryGetProperty("shortSummary", out var shortSummaryProperty) &&
+                    callData.TryGetProperty("ended", out var endedProperty) &&
+                    endedProperty.ValueKind != JsonValueKind.Null)
+                {
+                    // Si los datos ya están disponibles, devolvemos los detalles
+                    return new CallDetails
+                    {
+                        Summary = summaryProperty.GetString(),
+                        ShortSummary = shortSummaryProperty.GetString(),
+                        EndedAt = endedProperty.GetDateTime()
+                    };
+                }
+
+                // Si no se han recibido los datos, esperar un intervalo y reintentar
+                retries++;
+                Log.Information($"Intento {retries}/{maxRetries} fallido. Reintentando en {retryDelay.TotalSeconds} segundos...");
+                await Task.Delay(retryDelay);
+            }
+
+            // Si no se obtienen los detalles después de los reintentos, lanzar una excepción o manejar el error
+            throw new Exception($"No se pudieron obtener los detalles de la llamada {callId} después de {maxRetries} intentos.");
+        }
+
+
     }
 }

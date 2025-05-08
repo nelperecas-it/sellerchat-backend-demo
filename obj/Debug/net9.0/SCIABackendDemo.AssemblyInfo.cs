@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SCIABackendDemo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49bf0fbae99eff0a00995fae208cafb6a3738024")]
 [assembly: System.Reflection.AssemblyProductAttribute("SCIABackendDemo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SCIABackendDemo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

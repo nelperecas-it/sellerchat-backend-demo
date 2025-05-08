@@ -1,0 +1,27 @@
+2025-05-02 09:30:57.384 -05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-05-02 09:30:57.532 -05:00 [INF] Executed DbCommand (82ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT GET_LOCK('__EFMigrationsLock',-1);
+2025-05-02 09:30:57.889 -05:00 [INF] Executed DbCommand (136ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+    `MigrationId` varchar(150) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    PRIMARY KEY (`MigrationId`)
+);
+2025-05-02 09:30:58.317 -05:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='test_k' AND TABLE_NAME='__EFMigrationsHistory';
+2025-05-02 09:30:58.386 -05:00 [INF] Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2025-05-02 09:30:58.413 -05:00 [INF] Applying migration '20250502143040_AddCallDetailsToCallHistory'.
+2025-05-02 09:30:58.615 -05:00 [INF] Executed DbCommand (177ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `CallHistories` ADD `Direction` varchar(20) NULL;
+2025-05-02 09:30:58.699 -05:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `CallHistories` ADD `From` varchar(20) NULL;
+2025-05-02 09:30:58.779 -05:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE `CallHistories` ADD `To` varchar(20) NULL;
+2025-05-02 09:30:58.852 -05:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20250502143040_AddCallDetailsToCallHistory', '9.0.4');
+2025-05-02 09:30:58.999 -05:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT RELEASE_LOCK('__EFMigrationsLock');

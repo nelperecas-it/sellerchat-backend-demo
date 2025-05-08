@@ -1,0 +1,85 @@
+2025-05-01 17:15:23.715 -05:00 [ERR] The model for context 'SellerCallDbContext' has pending changes. Add a new migration before updating the database. See https://aka.ms/efcore-docs-pending-changes.
+2025-05-01 17:15:26.257 -05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-05-01 17:15:26.348 -05:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT GET_LOCK('__EFMigrationsLock',-1);
+2025-05-01 17:15:26.670 -05:00 [INF] Executed DbCommand (119ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+    `MigrationId` varchar(150) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    PRIMARY KEY (`MigrationId`)
+);
+2025-05-01 17:15:27.088 -05:00 [INF] Executed DbCommand (65ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='test_k' AND TABLE_NAME='__EFMigrationsHistory';
+2025-05-01 17:15:27.166 -05:00 [INF] Executed DbCommand (70ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2025-05-01 17:15:27.179 -05:00 [INF] Applying migration '20250501220359_InitialCreate'.
+2025-05-01 17:15:27.272 -05:00 [ERR] Failed executing DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `Users` (
+    `Id` int NOT NULL,
+    `Email` nvarchar(max) NOT NULL,
+    `Nombre` nvarchar(max) NOT NULL,
+    `Telefono` nvarchar(max) NOT NULL,
+    PRIMARY KEY (`Id`)
+);
+2025-05-01 17:19:03.207 -05:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='test_k' AND TABLE_NAME='__EFMigrationsHistory';
+2025-05-01 17:19:03.515 -05:00 [INF] Executed DbCommand (92ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2025-05-01 17:19:23.398 -05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-05-01 17:19:23.532 -05:00 [INF] Executed DbCommand (78ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT GET_LOCK('__EFMigrationsLock',-1);
+2025-05-01 17:19:23.920 -05:00 [INF] Executed DbCommand (156ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+    `MigrationId` varchar(150) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    PRIMARY KEY (`MigrationId`)
+);
+2025-05-01 17:19:24.390 -05:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='test_k' AND TABLE_NAME='__EFMigrationsHistory';
+2025-05-01 17:19:24.476 -05:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2025-05-01 17:19:24.490 -05:00 [INF] Applying migration '20250501221911_InitialCreate'.
+2025-05-01 17:19:24.598 -05:00 [INF] Executed DbCommand (92ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `Users` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Email` varchar(255) NOT NULL,
+    `Nombre` varchar(255) NOT NULL,
+    `Telefono` varchar(20) NOT NULL,
+    PRIMARY KEY (`Id`)
+);
+2025-05-01 17:19:24.693 -05:00 [INF] Executed DbCommand (89ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `CallHistories` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `CallId` longtext NOT NULL,
+    `Summary` varchar(1000) NULL,
+    `ShortSummary` varchar(1000) NULL,
+    `StartedAt` datetime(6) NOT NULL,
+    `EndedAt` datetime(6) NULL,
+    `UserId` int NOT NULL,
+    PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_CallHistories_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE
+);
+2025-05-01 17:19:24.792 -05:00 [INF] Executed DbCommand (91ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `Prompts` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Content` varchar(1000) NOT NULL,
+    `CreatedAt` datetime(6) NOT NULL,
+    `UserId` int NOT NULL,
+    PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Prompts_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE
+);
+2025-05-01 17:19:24.890 -05:00 [INF] Executed DbCommand (94ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_CallHistories_UserId` ON `CallHistories` (`UserId`);
+2025-05-01 17:19:24.984 -05:00 [INF] Executed DbCommand (90ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX `IX_Prompts_UserId` ON `Prompts` (`UserId`);
+2025-05-01 17:19:25.064 -05:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20250501221911_InitialCreate', '9.0.4');
+2025-05-01 17:19:25.224 -05:00 [INF] Executed DbCommand (78ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT RELEASE_LOCK('__EFMigrationsLock');
